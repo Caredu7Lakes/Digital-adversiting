@@ -1,0 +1,305 @@
+:root{
+  --bg: #0b1220;
+  --text: #eaf0ff;
+  --muted: rgba(234,240,255,.72);
+  --accent: #33e6c6;
+  --accent2:#62a8ff;
+  --stroke: rgba(255,255,255,.12);
+}
+
+*{ box-sizing: border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#0a0f1a;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.stage{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:24px;
+  padding:24px;
+}
+
+.slide{
+  width:1080px;
+  height:1350px;
+  position:relative;
+  overflow:hidden;
+  border-radius:48px;
+  border:1px solid var(--stroke);
+  box-shadow: 0 30px 90px rgba(0,0,0,.45);
+  background:
+    radial-gradient(900px 900px at 20% 20%, rgba(98,168,255,.12), transparent 60%),
+    radial-gradient(900px 900px at 80% 30%, rgba(51,230,198,.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)),
+    var(--bg);
+}
+
+.topbar{
+  position:absolute;
+  left:56px;
+  right:56px;
+  top:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.content{
+  position:absolute;
+  left:56px;
+  right:56px;
+  top:220px;
+}
+
+.kicker{
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-weight:800;
+  font-size:24px;
+  color: rgba(234,240,255,.78);
+  margin:0 0 28px 0;
+}
+
+.h1{
+  margin:0;
+  font-weight:900;
+  font-size:86px;
+  line-height:1.02;
+  color: var(--text);
+}
+
+.h2{
+  margin:0;
+  font-weight:900;
+  font-size:72px;
+  line-height:1.05;
+  color: var(--text);
+}
+
+.p{
+  margin:26px 0 0 0;
+  font-size:38px;
+  line-height:1.25;
+  font-weight:600;
+  color: var(--muted);
+}
+
+.p b{ color: rgba(234,240,255,.92); }
+
+.accent{
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+}
+
+.glass{
+  margin-top:28px;
+  padding:40px 44px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.list{
+  margin:18px 0 0 0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.list li{
+  font-size:42px;
+  line-height:1.18;
+  font-weight:800;
+  color: rgba(234,240,255,.86);
+}
+.list li::before{
+  content:"•";
+  color: rgba(234,240,255,.65);
+  margin-right:14px;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(234,240,255,.86);
+  font-weight:900;
+  font-size:26px;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:var(--accent);
+  box-shadow: 0 0 0 6px rgba(51,230,198,.12);
+}
+
+.brand{
+  position:absolute;
+  left:56px;
+  bottom:46px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  opacity:.92;
+}
+.brand img{
+  width:84px;
+  height:84px;
+  object-fit:contain;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
+}
+.brand .name{
+  font-weight:900;
+  font-size:28px;
+  color: rgba(234,240,255,.92);
+}
+.brand .sub{
+  font-weight:700;
+  font-size:22px;
+  color: rgba(234,240,255,.64);
+  margin-top:-2px;
+}
+
+.slideNo{
+  position:absolute;
+  right:56px;
+  bottom:56px;
+  font-weight:900;
+  font-size:26px;
+  color: rgba(234,240,255,.55);
+  border:1px solid rgba(255,255,255,.12);
+  padding:10px 14px;
+  border-radius:999px;
+  background: rgba(255,255,255,.05);
+}
+
+.split{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+}
+.block{ flex:1; min-width:0; }
+
+.mini{
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-weight:900;
+  font-size:20px;
+  color: rgba(234,240,255,.70);
+  margin-bottom:10px;
+}
+.big{
+  font-weight:900;
+  font-size:46px;
+  line-height:1.12;
+  color: rgba(234,240,255,.92);
+}
+
+.bigp{ font-size:44px; line-height:1.18; }
+
+.ctaRow{
+  display:flex;
+  gap:18px;
+  margin-top:28px;
+}
+.ctaBox{ flex:1; }
+
+.controls{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background: rgba(10,15,26,.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  padding:14px 18px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+}
+
+.btn{
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: rgba(234,240,255,.90);
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:14px;
+  cursor:pointer;
+}
+.btn:hover{ background: rgba(255,255,255,.10); }
+
+.note{
+  color: rgba(234,240,255,.62);
+  font-weight:700;
+  font-size:13px;
+}
+
+/* Preview em telas menores */
+@media (max-width: 1140px){
+  .slide{
+    transform: scale(.32);
+    transform-origin: top center;
+    margin: -380px 0;
+  }
+}
+/* =========================================
+   RESPONSIVO (preview) sem afetar export
+   ========================================= */
+
+/* área de preview: centraliza e dá respiro */
+.stage{
+  /* mantém seu layout, mas garante que em telas pequenas não “explode” */
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Wrapper automático: escala a .slide para caber na viewport */
+@media (max-width: 1200px){
+  .stage{
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .slide{
+    /* escala baseada na largura da tela (viewport) */
+    transform: scale(calc((100vw - 48px) / 1080));
+    transform-origin: top center;
+
+    /* evita espaços gigantes e scroll estranho */
+    margin: 0 auto;
+  }
+}
+
+/* Em telas muito estreitas, melhora ainda mais */
+@media (max-width: 700px){
+  .slide{
+    transform: scale(calc((100vw - 28px) / 1080));
+  }
+}
+/* ===== Correção do html2canvas (remove faixa azul no export) ===== */
+.is-exporting .accent{
+  background: none !important;
+  color: #33e6c6 !important;            /* cor sólida no export */
+  -webkit-text-fill-color: #33e6c6 !important;
+}

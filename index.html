@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrossel Metabolômica | Evolua</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <header class="controls">
+    <button class="btn" onclick="exportAll()">Exportar TODOS</button>
+    <button class="btn" onclick="exportOne(1)">Slide 1</button>
+    <button class="btn" onclick="exportOne(2)">Slide 2</button>
+    <button class="btn" onclick="exportOne(3)">Slide 3</button>
+    <button class="btn" onclick="exportOne(4)">Slide 4</button>
+    <button class="btn" onclick="exportOne(5)">Slide 5</button>
+    <button class="btn" onclick="exportOne(6)">Slide 6</button>
+    <button class="btn" onclick="exportOne(7)">Slide 7</button>
+    <button class="btn" onclick="exportOne(8)">Slide 8</button>
+    <span class="note">Arquivos: <b>index.html</b>, <b>style.css</b>, <b>logo.png</b></span>
+  </header>
+
+  <main class="stage">
+
+    <!-- SLIDE 1 -->
+    <section id="slide-1" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Performance & Metabolômica</div>
+        <div class="chip">Alta Performance</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">SINAL INVISÍVEL</div>
+        <h1 class="h1">
+          Seu treino pode estar gerando
+          <span class="accent">mais estresse metabólico</span>
+          do que adaptação.
+        </h1>
+        <p class="p">A queda de performance começa no metabolismo.</p>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Ciência aplicada</div>
+        </div>
+      </div>
+      <div class="slideNo">01/08</div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section id="slide-2" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Conceito</div>
+        <div class="chip">Carga Interna</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">O PROBLEMA INVISÍVEL</div>
+        <h2 class="h2">
+          Alta intensidade crônica pode levar ao
+          <span class="accent">Metabolic Overdrive</span>.
+        </h2>
+        <div class="glass">
+          <p class="p">Um estado de estresse metabólico contínuo antes do aparecimento de sintomas clínicos.</p>
+        </div>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Inteligência metabólica</div>
+        </div>
+      </div>
+      <div class="slideNo">02/08</div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section id="slide-3" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Fisiologia</div>
+        <div class="chip">Sinais Precoces</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">O QUE MUDA NO ORGANISMO</div>
+        <h2 class="h2">Quando a carga supera a capacidade adaptativa:</h2>
+        <div class="glass">
+          <ul class="list">
+            <li>Redução da eficiência mitocondrial</li>
+            <li>Alterações no Ciclo de Krebs</li>
+            <li>Aumento de estresse oxidativo</li>
+            <li>Desequilíbrio de aminoácidos</li>
+          </ul>
+        </div>
+        <p class="p">A fadiga começa na bioquímica.</p>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Saúde & performance</div>
+        </div>
+      </div>
+      <div class="slideNo">03/08</div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section id="slide-4" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Energia</div>
+        <div class="chip">Mitocôndria</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">CICLO DE KREBS</div>
+        <h2 class="h2">Marcadores podem indicar <span class="accent">alteração no fluxo energético</span>.</h2>
+        <div class="glass split">
+          <div class="block">
+            <div class="mini">EXEMPLOS</div>
+            <div class="big">Fumarato<br>Alfa-cetoglutarato</div>
+          </div>
+          <div class="block">
+            <p class="p">Alterações nesses metabólitos podem sugerir perda de eficiência na produção de ATP e na resposta adaptativa ao treino.</p>
+          </div>
+        </div>
+        <p class="p">Gestão de carga interna começa na célula.</p>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Vias bioquímicas</div>
+        </div>
+      </div>
+      <div class="slideNo">04/08</div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section id="slide-5" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Recuperação</div>
+        <div class="chip">Aminoácidos</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">LEUCINA & UTILIZAÇÃO</div>
+        <h2 class="h2">Leucina elevada nem sempre significa vantagem.</h2>
+        <div class="glass">
+          <div class="mini">PODE INDICAR</div>
+          <ul class="list">
+            <li>Excesso de suplementação</li>
+            <li>Baixa utilização muscular</li>
+            <li>Desequilíbrio metabólico adaptativo</li>
+          </ul>
+        </div>
+        <p class="p">Recuperação não é só consumir — é <b>metabolizar</b>.</p>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Precisão nutricional</div>
+        </div>
+      </div>
+      <div class="slideNo">05/08</div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section id="slide-6" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Metabolômica</div>
+        <div class="chip">Análise Funcional</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">O QUE AVALIA</div>
+        <h2 class="h2">Uma leitura funcional das <span class="accent">vias bioquímicas</span>.</h2>
+        <div class="glass">
+          <ul class="list">
+            <li>Vias do Ciclo de Krebs</li>
+            <li>Metabolismo de aminoácidos</li>
+            <li>Estresse oxidativo</li>
+            <li>Carga metabólica interna</li>
+          </ul>
+        </div>
+        <p class="p">Não é “um exame a mais” — é inteligência metabólica aplicada.</p>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Diagnóstico funcional</div>
+        </div>
+      </div>
+      <div class="slideNo">06/08</div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section id="slide-7" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Contexto Global</div>
+        <div class="chip">Referências</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">CENÁRIO INTERNACIONAL</div>
+        <h2 class="h2">Metabolômica clínica é usada para análise funcional avançada.</h2>
+        <div class="glass">
+          <div class="mini">EXEMPLOS DE LABORATÓRIOS</div>
+          <ul class="list">
+            <li>Genova Diagnostics (EUA)</li>
+            <li>Mosaic Diagnostics (EUA)</li>
+            <li>Diagnostiki Athinon (Europa)</li>
+          </ul>
+        </div>
+        <p class="p">No esporte de elite, performance é tratada como fisiologia extrema.</p>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Padrão internacional</div>
+        </div>
+      </div>
+      <div class="slideNo">07/08</div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section id="slide-8" class="slide">
+      <div class="topbar">
+        <div class="chip"><span class="dot"></span> Conclusão</div>
+        <div class="chip">CTA</div>
+      </div>
+
+      <div class="content">
+        <div class="kicker">MENSAGEM FINAL</div>
+        <h1 class="h1">Gestão de performance começa na <span class="accent">célula</span>.</h1>
+
+        <div class="glass">
+          <p class="p bigp">
+            A metabolômica permite identificar <b>padrões metabólicos</b>
+            antes que a fadiga se torne lesão e queda de rendimento.
+          </p>
+        </div>
+
+        <div class="ctaRow">
+          <div class="glass ctaBox">
+            <div class="mini">AÇÃO</div>
+            <div class="big">Salve para revisar depois.</div>
+          </div>
+          <div class="glass ctaBox">
+            <div class="mini">PRÓXIMO PASSO</div>
+            <p class="p">Quer uma leitura personalizada? <b>Chame no direct</b>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand">
+        <img src="./logo.png" alt="Logo">
+        <div>
+          <div class="name">Evolua</div>
+          <div class="sub">Performance estratégica</div>
+        </div>
+      </div>
+      <div class="slideNo">08/08</div>
+    </section>
+
+  </main>
+
+  <!-- html2canvas (precisa internet). Offline: baixar e trocar para ./html2canvas.min.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    const exportOptions = {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: null,
+      width: 1080,
+      height: 1350,
+      windowWidth: 1080,
+      windowHeight: 1350
+    };
+
+    async function exportOne(n){
+      const el = document.getElementById(`slide-${n}`);
+      if(!el) return;
+
+      if (!window.html2canvas) {
+        alert("html2canvas não carregou. Verifique internet ou use versão local.");
+        return;
+      }
+
+      // 1) ATIVA MODO EXPORT (remove gradiente do .accent no PNG, evita faixa azul)
+      document.documentElement.classList.add("is-exporting");
+
+      // 2) BLINDA EXPORT contra escala responsiva do preview
+      const prevTransform = el.style.transform;
+      el.style.transform = "none";
+
+      try{
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+        const canvas = await html2canvas(el, exportOptions);
+
+        const link = document.createElement('a');
+        link.download = `carrossel_metabolomica_${String(n).padStart(2,'0')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } finally {
+        // 3) RESTAURA tudo
+        el.style.transform = prevTransform;
+        document.documentElement.classList.remove("is-exporting");
+      }
+    }
+
+    async function exportAll(){
+      for(let n=1; n<=8; n++){
+        await exportOne(n);
+        await new Promise(r => setTimeout(r, 800));
+      }
+    }
+  </script>
+
+</body>
+</html>
