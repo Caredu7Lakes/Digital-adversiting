@@ -1,337 +1,522 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Carrossel Metabolômica | Evolua</title>
+  <title>Suplementos & Desperdício | Evolua Premium</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="./style.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+  <!-- html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#070a12;
+      --navy:#0b1222;
+      --navy2:#0a0f1d;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --muted2: rgba(255,255,255,.55);
+      --cyan:#38f2d0;
+      --cyan2:#5aa8ff;
+      --gold:#c9a227;
+      --shadow: 0 28px 80px rgba(0,0,0,.55);
+      --radius: 38px;
+      --radius2: 28px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(56,242,208,.10), transparent 55%),
+                  radial-gradient(900px 700px at 90% 30%, rgba(90,168,255,.12), transparent 55%),
+                  radial-gradient(900px 700px at 30% 90%, rgba(201,162,39,.10), transparent 60%),
+                  linear-gradient(180deg, #05060b, #070a12 70%, #060812);
+      color: var(--text);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      -webkit-font-smoothing: antialiased;
+      padding: 18px 12px 32px;
+      gap: 14px;
+    }
+
+    .toolbar{
+      width:min(1100px, 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+    }
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      box-shadow: 0 10px 22px rgba(0,0,0,.35);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
+    .btn svg{ display:block; }
+
+    .preview{ width:min(1100px, 100%); display:flex; justify-content:center; }
+    .preview-inner{ transform-origin: top center; will-change: transform; }
+
+    #capture{
+      width:1080px; height:1350px;
+      border-radius: var(--radius);
+      overflow:hidden;
+      position:relative;
+      box-shadow: var(--shadow);
+      background:
+        radial-gradient(900px 700px at 20% 0%, rgba(56,242,208,.10), transparent 55%),
+        radial-gradient(900px 700px at 100% 30%, rgba(90,168,255,.12), transparent 55%),
+        radial-gradient(900px 700px at 30% 100%, rgba(201,162,39,.10), transparent 60%),
+        linear-gradient(135deg, #070a12, #0b1222 55%, #070a12);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .frame{
+      position:absolute;
+      inset: 22px;
+      border-radius: calc(var(--radius) - 16px);
+      border: 1px solid rgba(255,255,255,.10);
+      pointer-events:none;
+    }
+
+    .header{
+      padding: 62px 86px 28px;
+      display:flex;
+      flex-direction:column;
+      gap: 18px;
+      position:relative;
+      z-index:2;
+    }
+
+    .brandline{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 20px;
+    }
+
+    .brandmark{ display:flex; align-items:center; gap: 14px; }
+    .logo{
+      width: 46px; height: 46px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
+    .brandtext{ display:flex; flex-direction:column; gap: 4px; }
+    .brandname{
+      font-weight: 900;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      font-size: 22px;
+      line-height: 1;
+    }
+    .tagline{
+      font-size: 11px;
+      letter-spacing: .44em;
+      text-transform: uppercase;
+      color: rgba(56,242,208,.9);
+      font-weight: 800;
+    }
+
+    .pillrow{
+      display:flex; align-items:center; justify-content:flex-end;
+      gap: 10px; flex-wrap:wrap;
+    }
+    .pill{
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.85);
+      font-weight: 800;
+      letter-spacing: .02em;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 14px 26px rgba(0,0,0,.26);
+    }
+    .pill .dot{
+      width:10px;height:10px;border-radius:50%;
+      display:inline-block;
+      margin-right:10px;
+      background: var(--cyan);
+      box-shadow: 0 0 0 5px rgba(56,242,208,.12);
+      vertical-align: -1px;
+    }
+
+    .title{ margin-top: 10px; text-align:center; padding: 0 30px; }
+    .h1{
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      line-height: 1.06;
+      margin: 0;
+      letter-spacing: -.02em;
+    }
+    .h1 em{ font-style: italic; color: rgba(255,255,255,.96); }
+    .subline{
+      margin-top: 14px;
+      font-size: 16px;
+      color: var(--muted);
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .quote{
+      margin: 18px auto 0;
+      width: min(860px, 100%);
+      padding: 22px 26px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .quote p{
+      margin:0;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      line-height: 1.25;
+      color: rgba(255,255,255,.92);
+    }
+    .quote p span{
+      color: rgba(201,162,39,.95);
+      font-style: italic;
+    }
+
+    .body{
+      padding: 30px 68px 26px;
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      display:flex;
+      gap: 18px;
+      align-items:flex-start;
+      padding: 20px 22px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.28);
+    }
+
+    .num{
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      display:flex; align-items:center; justify-content:center;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing:.02em;
+      flex: 0 0 64px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+    }
+    .num.n1{ color: var(--gold); }
+    .num.n2{ color: var(--cyan2); background: rgba(255,255,255,.06); }
+    .num.n3{ color: var(--gold); background: rgba(201,162,39,.10); }
+
+    .card h3{
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+    }
+    .card p{
+      margin: 6px 0 0;
+      font-size: 15px;
+      line-height: 1.28;
+      color: rgba(255,255,255,.72);
+      font-weight: 600;
+    }
+    .card p i{ font-style: italic; color: rgba(255,255,255,.84); }
+    .card p b{ color: rgba(255,255,255,.92); }
+
+    .alert{
+      display:flex; gap: 14px; align-items:center;
+      padding: 18px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 74, 74, .25);
+      background: linear-gradient(180deg, rgba(255,74,74,.10), rgba(0,0,0,.12));
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+    .alert .emoji{
+      width: 42px;height:42px;border-radius: 14px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 22px;
+    }
+    .alert p{
+      margin:0;
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+      font-weight: 800;
+      line-height: 1.25;
+    }
+    .alert p b{ color: rgba(255,255,255,.95); }
+
+    .rationale{
+      margin: 10px 68px 0;
+      padding: 26px 30px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(255,255,255,.04));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      text-align:center;
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+      position:relative;
+      z-index:2;
+    }
+    .rationale p{
+      margin:0;
+      font-size: 16px;
+      line-height: 1.38;
+      color: rgba(255,255,255,.80);
+      font-weight: 800;
+    }
+    .rationale p span{ color: rgba(201,162,39,.95); font-style: italic; }
+
+    .footer{
+      position:absolute;
+      bottom: 28px;
+      left: 44px; right: 44px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 16px;
+      z-index:2;
+      color: rgba(255,255,255,.65);
+    }
+    .site{
+      font-weight: 900;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      font-size: 13px;
+      opacity:.9;
+    }
+    .miniBrand{ display:flex; align-items:center; gap: 10px; opacity:.95; }
+    .miniBrand .miniTitle{
+      font-weight: 900; font-size: 14px;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 2px;
+    }
+    .miniBrand .miniSub{
+      font-weight: 700; font-size: 12px;
+      color: rgba(255,255,255,.60);
+    }
+
+    .badge{
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-weight: 900;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .blob{
+      position:absolute;
+      width: 720px; height: 720px;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: .18;
+      pointer-events:none;
+      z-index:1;
+    }
+    .b1{ top:-220px; left:-220px; background: rgba(56,242,208,.9); }
+    .b2{ top: 120px; right:-260px; background: rgba(90,168,255,.9); }
+    .b3{ bottom:-260px; left: 40px; background: rgba(201,162,39,.9); }
+
+    .is-exporting *{ animation: none !important; transition: none !important; }
+
+    @media (max-width: 1200px){
+      .preview-inner{ transform: scale(calc((100vw - 40px) / 1080)); }
+    }
+    @media (max-width: 680px){
+      .preview-inner{ transform: scale(calc((100vw - 18px) / 1080)); }
+      .toolbar{ top: 8px; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="toolbar">
+    <button id="btnPng" class="btn" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      EXPORTAR PNG (1080x1350)
+    </button>
+  </div>
 
-  <header class="controls">
-    <button class="btn" onclick="exportAll()">Exportar TODOS</button>
-    <button class="btn" onclick="exportOne(1)">Slide 1</button>
-    <button class="btn" onclick="exportOne(2)">Slide 2</button>
-    <button class="btn" onclick="exportOne(3)">Slide 3</button>
-    <button class="btn" onclick="exportOne(4)">Slide 4</button>
-    <button class="btn" onclick="exportOne(5)">Slide 5</button>
-    <button class="btn" onclick="exportOne(6)">Slide 6</button>
-    <button class="btn" onclick="exportOne(7)">Slide 7</button>
-    <button class="btn" onclick="exportOne(8)">Slide 8</button>
-    <span class="note">Arquivos: <b>index.html</b>, <b>style.css</b>, <b>logo.png</b></span>
-  </header>
+  <div class="preview">
+    <div class="preview-inner">
+      <div id="capture">
 
-  <main class="stage">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
 
-    <!-- SLIDE 1 -->
-    <section id="slide-1" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Performance & Metabolômica</div>
-        <div class="chip">Alta Performance</div>
-      </div>
+        <div class="frame"></div>
 
-      <div class="content">
-        <div class="kicker">SINAL INVISÍVEL</div>
-        <h1 class="h1">
-          Seu treino pode estar gerando
-          <span class="accent">mais estresse metabólico</span>
-          do que adaptação.
-        </h1>
-        <p class="p">A queda de performance começa no metabolismo.</p>
-      </div>
+        <section class="header">
+          <div class="brandline">
+            <div class="brandmark">
+              <img class="logo" src="./logo.png" alt="Evolua" crossorigin="anonymous">
+              <div class="brandtext">
+                <div class="brandname">EVOLUA</div>
+                <div class="tagline">Biotecnologia de Precisão & Performance</div>
+              </div>
+            </div>
 
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Ciência aplicada</div>
-        </div>
-      </div>
-      <div class="slideNo">01/08</div>
-    </section>
-
-    <!-- SLIDE 2 -->
-    <section id="slide-2" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Conceito</div>
-        <div class="chip">Carga Interna</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">O PROBLEMA INVISÍVEL</div>
-        <h2 class="h2">
-          Alta intensidade crônica pode levar ao
-          <span class="accent">Metabolic Overdrive</span>.
-        </h2>
-        <div class="glass">
-          <p class="p">Um estado de estresse metabólico contínuo antes do aparecimento de sintomas clínicos.</p>
-        </div>
-      </div>
-
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Inteligência metabólica</div>
-        </div>
-      </div>
-      <div class="slideNo">02/08</div>
-    </section>
-
-    <!-- SLIDE 3 -->
-    <section id="slide-3" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Fisiologia</div>
-        <div class="chip">Sinais Precoces</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">O QUE MUDA NO ORGANISMO</div>
-        <h2 class="h2">Quando a carga supera a capacidade adaptativa:</h2>
-        <div class="glass">
-          <ul class="list">
-            <li>Redução da eficiência mitocondrial</li>
-            <li>Alterações no Ciclo de Krebs</li>
-            <li>Aumento de estresse oxidativo</li>
-            <li>Desequilíbrio de aminoácidos</li>
-          </ul>
-        </div>
-        <p class="p">A fadiga começa na bioquímica.</p>
-      </div>
-
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Saúde & performance</div>
-        </div>
-      </div>
-      <div class="slideNo">03/08</div>
-    </section>
-
-    <!-- SLIDE 4 -->
-    <section id="slide-4" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Energia</div>
-        <div class="chip">Mitocôndria</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">CICLO DE KREBS</div>
-        <h2 class="h2">Marcadores podem indicar <span class="accent">alteração no fluxo energético</span>.</h2>
-        <div class="glass split">
-          <div class="block">
-            <div class="mini">EXEMPLOS</div>
-            <div class="big">Fumarato<br>Alfa-cetoglutarato</div>
+            <div class="pillrow">
+              <div class="pill"><span class="dot"></span> Suplementação</div>
+              <div class="pill">Economia</div>
+            </div>
           </div>
-          <div class="block">
-            <p class="p">Alterações nesses metabólitos podem sugerir perda de eficiência na produção de ATP e na resposta adaptativa ao treino.</p>
+
+          <div class="title">
+            <h1 class="h1"><em>Suplementos:</em> custo ou investimento?</h1>
+            <div class="subline">O diagnóstico define se você aproveita ou desperdiça</div>
           </div>
-        </div>
-        <p class="p">Gestão de carga interna começa na célula.</p>
-      </div>
 
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Vias bioquímicas</div>
-        </div>
-      </div>
-      <div class="slideNo">04/08</div>
-    </section>
-
-    <!-- SLIDE 5 -->
-    <section id="slide-5" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Recuperação</div>
-        <div class="chip">Aminoácidos</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">LEUCINA & UTILIZAÇÃO</div>
-        <h2 class="h2">Leucina elevada nem sempre significa vantagem.</h2>
-        <div class="glass">
-          <div class="mini">PODE INDICAR</div>
-          <ul class="list">
-            <li>Excesso de suplementação</li>
-            <li>Baixa utilização muscular</li>
-            <li>Desequilíbrio metabólico adaptativo</li>
-          </ul>
-        </div>
-        <p class="p">Recuperação não é só consumir — é <b>metabolizar</b>.</p>
-      </div>
-
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Precisão nutricional</div>
-        </div>
-      </div>
-      <div class="slideNo">05/08</div>
-    </section>
-
-    <!-- SLIDE 6 -->
-    <section id="slide-6" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Metabolômica</div>
-        <div class="chip">Análise Funcional</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">O QUE AVALIA</div>
-        <h2 class="h2">Uma leitura funcional das <span class="accent">vias bioquímicas</span>.</h2>
-        <div class="glass">
-          <ul class="list">
-            <li>Vias do Ciclo de Krebs</li>
-            <li>Metabolismo de aminoácidos</li>
-            <li>Estresse oxidativo</li>
-            <li>Carga metabólica interna</li>
-          </ul>
-        </div>
-        <p class="p">Não é “um exame a mais” — é inteligência metabólica aplicada.</p>
-      </div>
-
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Diagnóstico funcional</div>
-        </div>
-      </div>
-      <div class="slideNo">06/08</div>
-    </section>
-
-    <!-- SLIDE 7 -->
-    <section id="slide-7" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Contexto Global</div>
-        <div class="chip">Referências</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">CENÁRIO INTERNACIONAL</div>
-        <h2 class="h2">Metabolômica clínica é usada para análise funcional avançada.</h2>
-        <div class="glass">
-          <div class="mini">EXEMPLOS DE LABORATÓRIOS</div>
-          <ul class="list">
-            <li>Genova Diagnostics (EUA)</li>
-            <li>Mosaic Diagnostics (EUA)</li>
-            <li>Diagnostiki Athinon (Europa)</li>
-          </ul>
-        </div>
-        <p class="p">No esporte de elite, performance é tratada como fisiologia extrema.</p>
-      </div>
-
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Padrão internacional</div>
-        </div>
-      </div>
-      <div class="slideNo">07/08</div>
-    </section>
-
-    <!-- SLIDE 8 -->
-    <section id="slide-8" class="slide">
-      <div class="topbar">
-        <div class="chip"><span class="dot"></span> Conclusão</div>
-        <div class="chip">CTA</div>
-      </div>
-
-      <div class="content">
-        <div class="kicker">MENSAGEM FINAL</div>
-        <h1 class="h1">Gestão de performance começa na <span class="accent">célula</span>.</h1>
-
-        <div class="glass">
-          <p class="p bigp">
-            A metabolômica permite identificar <b>padrões metabólicos</b>
-            antes que a fadiga se torne lesão e queda de rendimento.
-          </p>
-        </div>
-
-        <div class="ctaRow">
-          <div class="glass ctaBox">
-            <div class="mini">AÇÃO</div>
-            <div class="big">Salve para revisar depois.</div>
+          <div class="quote">
+            <p>“Sem estratégia, o suplemento vira <span>tentativa e erro</span> — e isso custa caro.”</p>
           </div>
-          <div class="glass ctaBox">
-            <div class="mini">PRÓXIMO PASSO</div>
-            <p class="p">Quer uma leitura personalizada? <b>Chame no direct</b>.</p>
+        </section>
+
+        <section class="body">
+          <div class="card">
+            <div class="num n1">01</div>
+            <div>
+              <h3>O cenário real</h3>
+              <p>Creatina, whey, pré-treino e vitaminas são comprados com frequência — mas nem sempre <b>com base em dados</b>.</p>
+            </div>
           </div>
+
+          <div class="card">
+            <div class="num n2">02</div>
+            <div>
+              <h3>O problema</h3>
+              <p>Mesmo com exames laboratoriais básicos, sem <i>genética preditiva</i> e <i>metabolômica</i> você pode não ver o “porquê” da resposta (ou da falta dela).</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="num n3">03</div>
+            <div>
+              <h3>O impacto financeiro</h3>
+              <p>Suplementar por meses sem direção pode gerar <b>gasto recorrente</b> e resultados abaixo do esperado.</p>
+            </div>
+          </div>
+
+          <div class="alert">
+            <div class="emoji">💸</div>
+            <p><b>Alerta:</b> o desperdício raramente é “um pote”. É a <b>soma mensal</b> + tempo + frustração.</p>
+          </div>
+        </section>
+
+        <div class="rationale">
+          <p>Antes de comprar mais suplementos, vale entender o seu <span>metabolismo</span> e a sua <span>predisposição genética</span>.</p>
         </div>
-      </div>
 
-      <div class="brand">
-        <img src="./logo.png" alt="Logo">
-        <div>
-          <div class="name">Evolua</div>
-          <div class="sub">Performance estratégica</div>
+        <div class="footer">
+          <div class="miniBrand">
+            <img class="logo" src="./logo.png" alt="Evolua" crossorigin="anonymous" style="width:34px;height:34px;">
+            <div>
+              <div class="miniTitle">Evolua</div>
+              <div class="miniSub">Ciência aplicada</div>
+            </div>
+          </div>
+
+          <div class="site">WWW.EVOLUABIO.COM.BR</div>
+          <div class="badge">01/08</div>
         </div>
+
       </div>
-      <div class="slideNo">08/08</div>
-    </section>
-
-  </main>
-
-  <!-- html2canvas (precisa internet). Offline: baixar e trocar para ./html2canvas.min.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    </div>
+  </div>
 
   <script>
-    const exportOptions = {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: null,
-      width: 1080,
-      height: 1350,
-      windowWidth: 1080,
-      windowHeight: 1350
-    };
+    const btn = document.getElementById("btnPng");
+    const target = document.getElementById("capture");
 
-    async function exportOne(n){
-      const el = document.getElementById(`slide-${n}`);
-      if(!el) return;
-
-      if (!window.html2canvas) {
-        alert("html2canvas não carregou. Verifique internet ou use versão local.");
-        return;
-      }
-
-      // 1) ATIVA MODO EXPORT (remove gradiente do .accent no PNG, evita faixa azul)
+    btn.addEventListener("click", async () => {
+      if (!window.html2canvas) { alert("html2canvas não carregou. Verifique sua internet."); return; }
+      const original = btn.innerHTML;
+      btn.innerHTML = "Gerando PNG...";
+      btn.disabled = true;
       document.documentElement.classList.add("is-exporting");
 
-      // 2) BLINDA EXPORT contra escala responsiva do preview
-      const prevTransform = el.style.transform;
-      el.style.transform = "none";
-
-      try{
+      try {
         if (document.fonts && document.fonts.ready) await document.fonts.ready;
 
-        const canvas = await html2canvas(el, exportOptions);
+        const canvas = await html2canvas(target, {
+          scale: 3,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: null,
+          width: 1080, height: 1350,
+          windowWidth: 1080, windowHeight: 1350,
+          logging: false
+        });
 
-        const link = document.createElement('a');
-        link.download = `carrossel_metabolomica_${String(n).padStart(2,'0')}.png`;
-        link.href = canvas.toDataURL('image/png');
+        const link = document.createElement("a");
+        link.download = "Evolua_Suplementos_Economia_01.png";
+        link.href = canvas.toDataURL("image/png");
         link.click();
+      } catch (e) {
+        console.error(e);
+        alert("Erro ao exportar. Use 'Go Live' (Live Server) e tente novamente.");
       } finally {
-        // 3) RESTAURA tudo
-        el.style.transform = prevTransform;
         document.documentElement.classList.remove("is-exporting");
+        btn.innerHTML = original;
+        btn.disabled = false;
       }
-    }
-
-    async function exportAll(){
-      for(let n=1; n<=8; n++){
-        await exportOne(n);
-        await new Promise(r => setTimeout(r, 800));
-      }
-    }
+    });
   </script>
-
 </body>
 </html>
